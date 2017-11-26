@@ -1,0 +1,91 @@
+
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "region": "us-east-2",
+    "subnet": "subnet-f944ad91",
+    "sgid":"sg-a2bdfeca"
+  },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "region": "{{user  `region`}}",
+            "instance_type": "t2.micro",
+            "source_ami_filter": {
+              "filters": {
+                  "virtualization-type": "hvm",
+                  "name": "*Windows_Server-2012-R2*English-64Bit-Base*",
+                  "root-device-type": "ebs"
+                        },
+        "most_recent": true,
+        "owners": "amazon"
+      },
+            "ami_name": "newimage-{{timestamp}}",
+            "user_data_file": "{{template_dir}}/bootstrap.txt",
+            "communicator": "winrm",
+            "winrm_timeout": "4h",
+            "winrm_port": 5985,
+            "winrm_username": "Administrator",
+            "winrm_password": "SuperS3cr3t!",
+            "subnet_id": "{{user `subnet`}}",
+            "security_group_id": "{{user `sgid`}}",
+
+            "tags": {
+                "Name": "Windows-cistest",
+                "version": "2012r2",
+                "builder": "packer",
+                "hardened": "As per cis benchmark"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "scripts": [
+                "{{template_dir}}/ec2config.ps1",
+                "{{template_dir}}/bundleconfig.ps1",
+                "{{template_dir}}/install-choc.ps1"
+
+
+
+            ]
+        },
+        {
+          "type": "powershell",
+          "elevated_user": "Administrator",
+          "elevated_password": "SuperS3cr3t!",
+          "valid_exit_codes": "3010",
+
+          "scripts": [
+
+          "{{template_dir}}/install-dsc.ps1"
+          ]
+
+        },
+        {
+
+        "type": "windows-restart"
+        },
+        {
+          "type": "powershell",
+        
+          "scripts": [
+
+          "{{template_dir}}/pswdplcy.ps1"
+
+          ]
+
+        },
+        {
+          "type": "powershell",
+
+          "scripts": [
+
+        "{{template_dir}}/cis-benchmark.ps1"
+          ]
+
+        }
+
+            ]
+        }

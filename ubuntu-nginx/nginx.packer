@@ -1,0 +1,39 @@
+{
+
+"builders": [
+
+{
+  "type":"amazon-ebs",
+  "region": "us-east-2",
+  "source_ami": "ami-43391926",
+  "ssh_username": "ubuntu",
+  "instance_type": "t2.micro",
+  "ami_name": "amiwithprovisioner",
+  "ami_description": "Ami to test provisioner scripts",
+
+  "tags":{
+
+  "Name": "provisiontest",
+  "App": "someapp",
+  "role":"Somerole"
+  },
+  "run_tags":{
+
+  "role": "somefucking role"
+  }
+  }
+  ],
+
+  "provisioners": [
+  {
+      "type": "shell",
+      "script": "ansible.sh"
+  },
+  {
+      "type": "ansible-local",
+      "playbook_file": "./nginx.yml"
+  }
+  ]
+
+
+}

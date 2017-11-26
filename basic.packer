@@ -1,0 +1,29 @@
+{
+
+"builders": [
+
+{
+  "type": "amazon-ebs",
+  "region":"us-east-2",
+  "source_ami": "ami-43391926",
+  "instance_type": "t2.micro",
+  "ssh_username": "ubuntu",
+  "ami_name": "Middleteir{{isotime | clean_ami_name}}",
+  "ami_description": "Learing Packer",
+  "tags": {
+
+
+"Role" : "Middletier"
+
+  },
+  "run_tags": {
+    "role" : "Build System"
+
+  }
+
+
+}
+
+]
+
+}

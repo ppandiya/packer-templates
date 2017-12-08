@@ -43,8 +43,7 @@
         {
             "type": "powershell",
             "scripts": [
-                "{{template_dir}}/ec2config.ps1",
-                "{{template_dir}}/bundleconfig.ps1",
+
                 "{{template_dir}}/install-choc.ps1"
 
 
@@ -69,7 +68,7 @@
         },
         {
           "type": "powershell",
-        
+
           "scripts": [
 
           "{{template_dir}}/pswdplcy.ps1"
@@ -81,8 +80,9 @@
           "type": "powershell",
 
           "scripts": [
-
-        "{{template_dir}}/cis-benchmark.ps1"
+        "{{template_dir}}/cis-benchmark.ps1",
+        "{{template_dir}}/ec2config.ps1",
+        "{{template_dir}}/bundleconfig.ps1"
           ]
 
         }

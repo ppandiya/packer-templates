@@ -4,8 +4,8 @@
     "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "region": "us-east-2",
-    "subnet": "subnet-f944ad91",
-    "sgid":"sg-a2bdfeca"
+    "subnet": "subnet-f944xxx",
+    "sgid":"sg-xxxxxxx"
   },
     "builders": [
         {
